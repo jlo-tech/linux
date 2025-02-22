@@ -16,3 +16,12 @@ several of them using the reStructuredText markup notation.
 Please read the Documentation/process/changes.rst file, as it contains the
 requirements for building and running the kernel, and information about
 the problems which may result by upgrading your kernel.
+
+DISCLAIMER:
+
+This repo contains my own kernel patches which are for educational purposes only. 
+They are provided without any warranty. Only consider using them when you really know what you are doing.
+These patches can (and probably will) effect the stabillity of the kernel, use at your own risk.
+You should never use them on a productive system.
+
+
