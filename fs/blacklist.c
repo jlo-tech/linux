@@ -130,6 +130,11 @@ static int blacklist_block(unsigned char *hash)
  */
 static long do_blacklist(unsigned char *uhash)
 {
+	if(current_euid().val != 0) {
+		pr_info("BLACKLIST: You need to be root to execute sys_blacklist().");
+		return -EPERM;
+	}
+
 	unsigned char khash[32];
 	int retval = copy_from_user(khash, uhash, SHA256_HASH_SIZE);
 	if(retval > 0)
