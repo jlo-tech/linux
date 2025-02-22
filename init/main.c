@@ -103,6 +103,7 @@
 #include <linux/pidfs.h>
 #include <linux/ptdump.h>
 #include <net/net_namespace.h>
+#include <linux/blacklist.h>
 
 #include <asm/io.h>
 #include <asm/setup.h>
@@ -1094,6 +1095,8 @@ void start_kernel(void)
 	acpi_subsystem_init();
 	arch_post_acpi_subsys_init();
 	kcsan_init();
+
+	blacklist_init();
 
 	/* Do the rest non-__init'ed, we're now alive */
 	rest_init();

@@ -78,6 +78,8 @@
 
 #include <trace/events/sched.h>
 
+#include <linux/blacklist.h>
+
 static int bprm_creds_from_file(struct linux_binprm *bprm);
 
 int suid_dumpable = 0;
@@ -1908,6 +1910,14 @@ static int do_execveat_common(int fd, struct filename *filename,
 	    is_rlimit_overlimit(current_ucounts(), UCOUNT_RLIMIT_NPROC, rlimit(RLIMIT_NPROC))) {
 		retval = -EAGAIN;
 		goto out_ret;
+	}
+
+	/*
+	 * Prevent execution of blacklisted apps
+	 */
+	if(!blacklist_validate(filename)) {
+		pr_info("BLACKLIST: Execution of %s prevented.\n", filename->name);
+		return -EPERM;
 	}
 
 	/* We're below the limit (still or again), so we don't want to make
